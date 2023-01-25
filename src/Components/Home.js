@@ -8,8 +8,9 @@ import {
 } from "react-native";
 import React from "react";
 import { homeData } from "../Mock/MockData.js";
+import { connect } from "react-redux";
 
-export default function Home({ navigation }) {
+function Home(props,{ navigation }) {
   const navigationArray = ["characters", "houses"];
 
   const carouselView = ({ item, index }) => {
@@ -32,6 +33,7 @@ export default function Home({ navigation }) {
 
   return (
     <View style={styles.mainHomeWrapper}>
+    <Text style = { { marginTop:50 }}>{ `Welcome ${props.reduxEmail}` }</Text>
       <FlatList
         keyExtractor={(_, i) => i}
         data={homeData}
@@ -41,9 +43,16 @@ export default function Home({ navigation }) {
   );
 }
 
+const mapStateToProps = (state) => ({
+  reduxEmail:state.reduxEmail
+})
+
+export default connect(mapStateToProps)(Home);
+
 const styles = StyleSheet.create({
   mainHomeWrapper: {
     flex: 1,
+    alignItems:"center"
   },
   indiviImgStyle: {
     width: 200,

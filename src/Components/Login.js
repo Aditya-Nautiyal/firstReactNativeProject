@@ -6,8 +6,9 @@ import {
   TouchableOpacity,
 } from "react-native";
 import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
 
-export default function Login({ navigation }) {
+function Login(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isValid, setValid] = useState(false);
@@ -50,7 +51,11 @@ export default function Login({ navigation }) {
             { backgroundColor: isValid ? "#42EEFC" : "grey" },
           ]}
           disabled={!isValid}
-          onPress={() => navigation.navigate("home")}
+          onPress={() => {
+            const processedEmail = email.slice(0,email.indexOf("@"))
+            props.dispatch({ type:"SAVEEMAIL",processedEmail})
+            props.navigation.navigate("home");
+            }}
         >
           <Text>Login</Text>
         </TouchableOpacity>
@@ -58,6 +63,12 @@ export default function Login({ navigation }) {
     </View>
   );
 }
+
+const mapStateToProps = (state) => ({
+  reduxEmail:state.reduxEmail
+})
+
+export default connect(mapStateToProps)(Login);
 
 const styles = StyleSheet.create({
   mainLoginWrapper: {

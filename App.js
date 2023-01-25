@@ -5,25 +5,41 @@ import Login from "./src/Components/Login";
 import Home from "./src/Components/Home";
 import Characters from "./src/Components/Characters";
 import Houses from "./src/Components/Houses";
+import { createStore } from "redux";
+import { Provider } from "react-redux";
+
+function reducer(state = "", action) {
+  switch (action.type) {
+    case "SAVEEMAIL":
+      return {
+        reduxEmail: action.processedEmail,
+      };
+    default:
+      return state;
+  }
+}
+
+const store = createStore(reducer);
 
 export default function App() {
   const Stack = createNativeStackNavigator();
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="login">
-        <Stack.Screen
-          name="login"
-          component={Login}
+    <Provider store={store}>
+      <NavigationContainer>
+        <Stack.Navigator
+          initialRouteName="login"
           screenOptions={{
             headerShown: false,
           }}
-        />
-        <Stack.Screen name="home" component={Home} />
-        <Stack.Screen name="characters" component={Characters} />
-        <Stack.Screen name="houses" component={Houses} />
-      </Stack.Navigator>
-    </NavigationContainer>
+        >
+          <Stack.Screen name="login" component={Login} />
+          <Stack.Screen name="home" component={Home} />
+          <Stack.Screen name="characters" component={Characters} />
+          <Stack.Screen name="houses" component={Houses} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 }
 
