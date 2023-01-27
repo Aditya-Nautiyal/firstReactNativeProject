@@ -10,7 +10,7 @@ import React from "react";
 import { homeData } from "../Mock/MockData.js";
 import { connect } from "react-redux";
 
-function Home(props,{ navigation }) {
+function Home(props, { navigation }) {
   const navigationArray = ["characters", "houses"];
 
   const carouselView = ({ item, index }) => {
@@ -33,7 +33,10 @@ function Home(props,{ navigation }) {
 
   return (
     <View style={styles.mainHomeWrapper}>
-    <Text style = { { marginTop:50 }}>{ `Welcome ${props.reduxEmail}` }</Text>
+      <View style={styles.nameWrapper}>
+        <Text>Welcome </Text>
+        <Text style={styles.name}>{props.reduxEmail}</Text>
+      </View>
       <FlatList
         keyExtractor={(_, i) => i}
         data={homeData}
@@ -44,15 +47,15 @@ function Home(props,{ navigation }) {
 }
 
 const mapStateToProps = (state) => ({
-  reduxEmail:state.reduxEmail
-})
+  reduxEmail: state.reduxEmail,
+});
 
 export default connect(mapStateToProps)(Home);
 
 const styles = StyleSheet.create({
   mainHomeWrapper: {
     flex: 1,
-    alignItems:"center"
+    alignItems: "center",
   },
   indiviImgStyle: {
     width: 200,
@@ -75,5 +78,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 10,
     borderRadius: 10,
+  },
+  nameWrapper: {
+    marginTop: 50,
+    alignItems:"center"
+  },
+  name: {
+    
+    fontWeight: "900",
+    textTransform:"uppercase",
+    textDecorationLine:"underline",
+    fontStyle:"italic"
   },
 });
